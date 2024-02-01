@@ -9,3 +9,39 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Author {
+  id        Int     @id @default(autoincrement())
+  fullname  String
+  biography String?
+  image     String?
+  Book      Book[]
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+  Book Book[]
+}
+
+model Editorial {
+  id      Int     @id @default(autoincrement())
+  name    String
+  website String?
+  Book    Book[]
+}
+
+model Book {
+  id              Int       @id @default(autoincrement())
+  title           String
+  author          Author    @relation(fields: [authorId], references: [id])
+  authorId        Int
+  editorial       Editorial @relation(fields: [editorialId], references: [id])
+  editorialId     Int
+  quantity        String
+  publicationDate DateTime
+  category        Category  @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  isBestSeller    Boolean
+  image           String?
+}
