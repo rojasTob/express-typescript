@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express';
 import { PrismaClient } from '@prisma/client';
 import AuthorRoutes from './routes/AuthorRoutes';
+import CategoryRoutes from './routes/CategoryRoutes';
 
 export const prisma = new PrismaClient();
 
@@ -16,6 +17,7 @@ async function main(){
   });
 
   app.use("/api/author", AuthorRoutes);
+  app.use("/api/category", CategoryRoutes);
 
   app.listen(PORT,()=>{
     console.log(`Server is listening at ${PORT} port.`)
