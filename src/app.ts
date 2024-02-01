@@ -1,5 +1,6 @@
 import express, {Request, Response} from 'express';
 import { PrismaClient } from '@prisma/client';
+import AuthorRoutes from './routes/AuthorRoutes';
 
 export const prisma = new PrismaClient();
 
@@ -13,6 +14,8 @@ async function main(){
   app.get('/', (req: Request, res: Response) => {
     res.send('Hello World + prisma connection!');
   });
+
+  app.use("/api/author", AuthorRoutes);
 
   app.listen(PORT,()=>{
     console.log(`Server is listening at ${PORT} port.`)
