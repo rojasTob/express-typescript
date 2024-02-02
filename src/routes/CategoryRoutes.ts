@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post("/create", CategoryController.create);
 router.get("/getAll", CategoryController.getAll);
+router.get("/get/:id", CategoryController.getById);
 router.put("/update/:id", CategoryController.update);
 router.delete("/delete/:id", CategoryController.remove);
 

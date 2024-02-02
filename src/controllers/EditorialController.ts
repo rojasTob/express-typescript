@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createEditorial, updateEditorial, removeEditorial, getAllEditorials} from "../services/EditorialService";
+import { createEditorial, updateEditorial, removeEditorial, getAllEditorials, getEditorialById} from "../services/EditorialService";
 import { Editorial } from "../types";
 
 const create = async(req: Request, res: Response) => {
@@ -16,6 +16,15 @@ const getAll = async(req: Request, res: Response) => {
   try {
     const editorials: Editorial[] = await getAllEditorials();
     res.status(200).json(editorials);
+  } catch (error) {
+    res.status(500).json({error: error});
+  }
+}
+
+const getById = async(req: Request, res: Response) => {
+  try {
+    const editorial: Editorial = await getEditorialById(Number(req.body.id));
+    res.status(200).json(editorial);
   } catch (error) {
     res.status(500).json({error: error});
   }
@@ -41,4 +50,4 @@ const remove = async(req: Request, res: Response ) => {
   }
 }
 
-export default { create, getAll, update, remove};
+export default { create, getAll, update, remove, getById};

@@ -1,19 +1,22 @@
 export type Category = {
   id: number,
-  name: string
+  name: string,
+  books?: Book[]
 }
 
 export type Author = {
   id: number,
   fullname: string,
   biography?: string,
-  image?: string
+  image?: string,
+  books?: Book[]
 }
 
 export type Editorial = {
   id: number,
   name: string,
-  website?: string
+  website?: string,
+  books?: Book[]
 }
 
 export type Book = {

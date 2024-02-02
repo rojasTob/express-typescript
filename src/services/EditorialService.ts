@@ -23,6 +23,16 @@ export const getAllEditorials = async() => {
   }
 }
 
+export const getEditorialById = async(id: number) => {
+  try {
+    const editorial = prisma.editorial.findUnique({where: {id: id}, include:{Book:true}});
+    return editorial;
+  } catch (error) {
+    console.error(`Error when getting editorial id ${id}: `, error);
+    throw error;
+  }
+}
+
 export const updateEditorial = async(editorial: Editorial)=>{
   try{
     const {id, name, website} = editorial;

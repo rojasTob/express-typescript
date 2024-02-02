@@ -27,6 +27,16 @@ export const getAllAuthors = async() => {
   }
 }
 
+export const getAuthorById = async(id: number) => {
+  try {
+    const author = prisma.author.findUnique({where: {id: id}, include:{Book:true}});
+    return author;
+  } catch (error) {
+    console.error(`Error when getting author id ${id}: `, error);
+    throw error;
+  }
+}
+
 export const updateAuthor = async(author: Author)=>{
   try{
     const {id, fullname, biography, image} = author;

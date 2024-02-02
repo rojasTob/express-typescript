@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createCategory, updateCategory, getAllCategories, removeCategory} from "../services/CategoryService";
+import { createCategory, updateCategory, getAllCategories, removeCategory, getCategoryById} from "../services/CategoryService";
 import { Category } from "../types";
 
 const create = async(req: Request, res: Response) => {
@@ -16,6 +16,15 @@ const getAll = async(req: Request, res: Response) => {
   try {
     const categories: Category[] = await getAllCategories();
     res.status(200).json(categories);
+  } catch (error) {
+    res.status(500).json({error: error});
+  }
+}
+
+const getById = async(req: Request, res: Response) => {
+  try {
+    const category = await getCategoryById(Number(req.body.id));
+    res.status(200).json(category);
   } catch (error) {
     res.status(500).json({error: error});
   }
@@ -41,4 +50,4 @@ const remove = async(req: Request, res: Response ) => {
   }
 }
 
-export default { create, getAll, update, remove};
+export default { create, getAll, update, remove, getById};

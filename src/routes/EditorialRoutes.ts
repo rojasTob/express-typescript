@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post("/create", EditorialController.create);
 router.get("/getAll", EditorialController.getAll);
+router.get("/get/:id", EditorialController.getById);
 router.put("/update/:id", EditorialController.update);
 router.delete("/delete/:id", EditorialController.remove);
 

@@ -23,6 +23,16 @@ export const getAllCategories = async() => {
   }
 }
 
+export const getCategoryById = async(id: number) => {
+  try {
+    const category = prisma.category.findUnique({where: {id: id}, include:{Book:true}});
+    return category;
+  } catch (error) {
+    console.error(`Error when getting editorial id ${id}: `, error);
+    throw error;
+  }
+}
+
 export const updateCategory = async(cateogry: Category)=>{
   try{
     const {id, name} = cateogry;
