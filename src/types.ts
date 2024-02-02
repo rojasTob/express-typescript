@@ -15,3 +15,26 @@ export type Editorial = {
   name: string,
   website?: string
 }
+
+export type Book = {
+  id: number;
+  title: string;
+  authorId: number;
+  editorialId: number;
+  quantity: number;
+  publicationDate: Date;
+  categoryId: number;
+  isBestSeller: boolean;
+  image?: string;
+}
+
+export type NewBook = {
+  title: string, 
+  authorId: number, 
+  editorialId: number,
+  quantity: number, 
+  publicationDate?: Date,
+  categoryId: number,
+  isBestSeller: boolean,
+  image?: string
+}
