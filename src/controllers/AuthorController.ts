@@ -1,12 +1,7 @@
 import { Request, Response } from "express";
 import { createAuthor, updateAuthor, getAllAuthors, removeAuthor} from "../services/AuthorService";
+import { Author } from "../types";
 
-type Author = {
-  id: number,
-  fullname: string,
-  biography?: string,
-  image?: string
-}
 
 const create = async(req: Request, res: Response) => {
   try{

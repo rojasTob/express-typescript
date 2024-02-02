@@ -1,11 +1,5 @@
 import { prisma } from "../app";
-
-type Author = {
-  id: number,
-  fullname: string,
-  biography?: string,
-  image?: string
-}
+import {Author} from "../types";
 
 export const createAuthor = async(fullname: string, biography?:string, image?:string) => {
   try{

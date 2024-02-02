@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { createCategory, updateCategory, getAllCategories, removeCategory} from "../services/CategoryService";
-import { Category } from "../types";
+import { createEditorial, updateEditorial, removeEditorial, getAllEditorials} from "../services/EditorialService";
+import { Editorial } from "../types";
 
 const create = async(req: Request, res: Response) => {
   try{
-    const {name} = req.body;
-    const category = await createCategory(name);
-    res.status(200).json(category);
+    const {name, website} = req.body;
+    const editorial = await createEditorial(name, website);
+    res.status(200).json(editorial);
   }catch(error){
     res.status(500).json({error: error});
   }
@@ -14,8 +14,8 @@ const create = async(req: Request, res: Response) => {
 
 const getAll = async(req: Request, res: Response) => {
   try {
-    const categories: Category[] = await getAllCategories();
-    res.status(200).json(categories);
+    const editorials: Editorial[] = await getAllEditorials();
+    res.status(200).json(editorials);
   } catch (error) {
     res.status(500).json({error: error});
   }
@@ -23,9 +23,9 @@ const getAll = async(req: Request, res: Response) => {
 
 const update = async(req: Request, res: Response) =>{
   try{
-    const category = req.body as Category;
-    const updatedCategory = await updateCategory(category);
-    res.status(200).json(updatedCategory);
+    const editorial = req.body as Editorial;
+    const updatedEditorial = await updateEditorial(editorial);
+    res.status(200).json(updatedEditorial);
   }catch(error){
     res.status(500).json({error: error});
   }
@@ -34,8 +34,8 @@ const update = async(req: Request, res: Response) =>{
 const remove = async(req: Request, res: Response ) => {
   try {
     const id = req.body.id;
-    const removedCategory = await removeCategory(id);
-    res.status(200).json(removedCategory);
+    const removedEditorial = await removeEditorial(id);
+    res.status(200).json(removedEditorial);
   } catch (error) {
     res.status(500).json({error: error});
   }
