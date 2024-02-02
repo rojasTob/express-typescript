@@ -1,8 +1,6 @@
 import { prisma } from "../app";
 import { Book, NewBook } from "../types";
 
-//TODO fix quantity type is not string!!
-//TODO fix publication date 
 
 export const createBook = async(newBook : NewBook) => {
   try{
@@ -50,5 +48,12 @@ export const updateBook = async(book: Book)=>{
   }
 }
 
-//TODO implement 
-// export const removeBook = async(id: number) => {}
+export const removeBook = async(id:number) => {
+  try {
+    const removedBook = await prisma.book.delete({where:{id: id}});
+    return removedBook;
+  } catch (error) {
+    console.error("Error when removing book: ", error);
+    throw error;
+  }
+}

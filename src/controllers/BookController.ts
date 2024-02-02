@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createBook, getAllBooks, updateBook} from "../services/BookService";
+import { createBook, getAllBooks, updateBook, removeBook} from "../services/BookService";
 import { Book, NewBook } from "../types";
 
 const create = async(req: Request, res: Response) => {
@@ -31,4 +31,13 @@ const update = async(req: Request, res: Response) =>{
   }
 }
 
-export default { create, getAll, update };
+const remove = async(req: Request, res: Response) => {
+  try {
+    const removedBook = await removeBook(Number(req.body.id));
+    res.status(200).json(removedBook);
+  } catch (error) {
+    res.status(500).json({error: error});
+  }
+}
+
+export default { create, getAll, update, remove };
