@@ -1,10 +1,10 @@
 import { prisma } from "../app";
-import { Editorial } from "../types";
+import { Editorial, NewEditorial } from "../types";
 
-export const createEditorial = async(name: string, website?: string) => {
+export const createEditorial = async(newEditorial: NewEditorial) => {
   try{
       const editorial = await prisma.editorial.create({
-      data: { name, website }
+      data: { ...newEditorial }
     });
     return editorial as Editorial;
   }catch(error){

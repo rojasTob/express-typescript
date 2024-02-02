@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { createAuthor, updateAuthor, getAllAuthors, removeAuthor, getAuthorById} from "../services/AuthorService";
-import { Author } from "../types";
+import { Author, NewAuthor } from "../types";
 
 
 const create = async(req: Request, res: Response) => {
   try{
-    const {fullname, biography, image} = req.body;
-    const author = await createAuthor(fullname,biography,image);
+    const newAuthor = req.body as NewAuthor;
+    const author = await createAuthor(newAuthor);
     res.status(200).json(author);
   }catch(error){
     res.status(500).json({error: error});

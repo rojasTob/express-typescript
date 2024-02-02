@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { createCategory, updateCategory, getAllCategories, removeCategory, getCategoryById} from "../services/CategoryService";
-import { Category } from "../types";
+import { Category, NewCategory } from "../types";
 
 const create = async(req: Request, res: Response) => {
   try{
-    const {name} = req.body;
-    const category = await createCategory(name);
+    const newCategory = req.body as NewCategory;
+    const category = await createCategory(newCategory);
     res.status(200).json(category);
   }catch(error){
     res.status(500).json({error: error});

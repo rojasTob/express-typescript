@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { createEditorial, updateEditorial, removeEditorial, getAllEditorials, getEditorialById} from "../services/EditorialService";
-import { Editorial } from "../types";
+import { Editorial, NewEditorial } from "../types";
 
 const create = async(req: Request, res: Response) => {
   try{
-    const {name, website} = req.body;
-    const editorial = await createEditorial(name, website);
+    const newEditorial = req.body as NewEditorial;
+    const editorial = await createEditorial(newEditorial);
     res.status(200).json(editorial);
   }catch(error){
     res.status(500).json({error: error});

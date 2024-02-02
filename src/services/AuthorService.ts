@@ -1,14 +1,10 @@
 import { prisma } from "../app";
-import {Author} from "../types";
+import {Author, NewAuthor} from "../types";
 
-export const createAuthor = async(fullname: string, biography?:string, image?:string) => {
+export const createAuthor = async(newAuthor: NewAuthor) => {
   try{
       const author = await prisma.author.create({
-      data: {
-        fullname,
-        biography,
-        image
-      }
+      data: {...newAuthor}
     });
     return author as Author;
   }catch(error){

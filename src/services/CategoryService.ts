@@ -1,10 +1,10 @@
 import { prisma } from "../app";
-import { Category } from "../types";
+import { Category, NewCategory } from "../types";
 
-export const createCategory = async(name: string) => {
+export const createCategory = async(newCategory: NewCategory) => {
   try{
       const category = await prisma.category.create({
-      data: { name }
+      data: { ...newCategory }
     });
     return category as Category;
   }catch(error){
