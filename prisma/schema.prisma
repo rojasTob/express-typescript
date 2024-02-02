@@ -38,8 +38,8 @@ model Book {
   authorId        Int
   editorial       Editorial @relation(fields: [editorialId], references: [id])
   editorialId     Int
-  quantity        String
-  publicationDate DateTime
+  quantity        Int?
+  publicationDate DateTime?
   category        Category  @relation(fields: [categoryId], references: [id])
   categoryId      Int
   isBestSeller    Boolean
