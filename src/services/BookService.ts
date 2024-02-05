@@ -67,3 +67,37 @@ export const removeBook = async(id:number) => {
     throw error;
   }
 }
+
+const updateQuantity = async (id: number, quantity: number): Promise<Book> => {
+  try {
+    const updatedQuantity = await prisma.book.update(
+      {
+        where:{id},
+        data:{
+          quantity: quantity
+        }
+      });
+    return updatedQuantity as Book;
+  } catch (error) {
+    console.error("Error when updating quantity on book: ", error);
+    throw error;
+  }  
+}
+
+export const buyBook = async (id:number, quantityToBuy: number) => {
+  const book = await getBookById(id);
+  if(book.quantity > quantityToBuy){
+    const newQuantity = book.quantity - quantityToBuy;
+    return await updateQuantity(id, newQuantity);
+  }
+  throw new Error("The number in stock is not enough to buy this book.");
+}
+
+export const updateStock = async (id:number, quantity: number) => {
+  if(quantity > 0){
+    const book = await getBookById(id);
+    const newQuantity = book.quantity + quantity;
+    return await updateQuantity(id, newQuantity);
+  }
+  throw new Error("There is not valid amount to update the stock.");
+}
