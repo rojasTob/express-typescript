@@ -23,7 +23,7 @@ const getAll = async(req: Request, res: Response) => {
 
 const getById = async (req:Request, res:Response) => {
   try {
-    const book = await getBookById(Number(req.body.id));
+    const book = await getBookById(Number(req.params.id));
     res.status(200).json(book);
   } catch (error) {
     res.status(500).json({error: error});
@@ -32,8 +32,9 @@ const getById = async (req:Request, res:Response) => {
 
 const update = async(req: Request, res: Response) =>{
   try{
-    const book = req.body as Book;
-    const updatedBook = await updateBook(book);
+    const {id} = req.params;
+    const bookInfo = req.body;
+    const updatedBook = await updateBook({id, ...bookInfo});
     res.status(200).json(updatedBook);
   }catch(error){
     res.status(500).json({error: error});
@@ -42,7 +43,7 @@ const update = async(req: Request, res: Response) =>{
 
 const remove = async(req: Request, res: Response) => {
   try {
-    const removedBook = await removeBook(Number(req.body.id));
+    const removedBook = await removeBook(Number(req.params.id));
     res.status(200).json(removedBook);
   } catch (error) {
     res.status(500).json({error: error});

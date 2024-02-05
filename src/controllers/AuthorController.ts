@@ -24,7 +24,7 @@ const getAll = async(req: Request, res: Response) => {
 
 const getById = async(req: Request, res: Response) => {
   try {
-    const author: Author = await getAuthorById(Number(req.body.id));
+    const author: Author = await getAuthorById(Number(req.params.id));
     res.status(200).json(author);
   } catch (error) {
     res.status(500).json({error: error});
@@ -33,8 +33,9 @@ const getById = async(req: Request, res: Response) => {
 
 const update = async(req: Request, res: Response) =>{
   try{
-    const author = req.body as Author;
-    const updatedAuthor = await updateAuthor(author);
+    const {id} = req.params;
+    const authorInfo = req.body;
+    const updatedAuthor = await updateAuthor({id, ...authorInfo});
     res.status(200).json(updatedAuthor);
   }catch(error){
     res.status(500).json({error: error});
@@ -43,8 +44,7 @@ const update = async(req: Request, res: Response) =>{
 
 const remove = async(req: Request, res: Response ) => {
   try {
-    const id = req.body.id;
-    const removedAuthor = await removeAuthor(id);
+    const removedAuthor = await removeAuthor(Number(req.params.id));
     res.status(200).json(removedAuthor);
   } catch (error) {
     res.status(500).json({error: error});

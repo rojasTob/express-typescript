@@ -23,7 +23,7 @@ const getAll = async(req: Request, res: Response) => {
 
 const getById = async(req: Request, res: Response) => {
   try {
-    const editorial: Editorial = await getEditorialById(Number(req.body.id));
+    const editorial: Editorial = await getEditorialById(Number(req.params.id));
     res.status(200).json(editorial);
   } catch (error) {
     res.status(500).json({error: error});
@@ -32,8 +32,9 @@ const getById = async(req: Request, res: Response) => {
 
 const update = async(req: Request, res: Response) =>{
   try{
-    const editorial = req.body as Editorial;
-    const updatedEditorial = await updateEditorial(editorial);
+    const {id} = req.params;
+    const editorialInfo = req.body;
+    const updatedEditorial = await updateEditorial({id, ...editorialInfo});
     res.status(200).json(updatedEditorial);
   }catch(error){
     res.status(500).json({error: error});
@@ -42,8 +43,7 @@ const update = async(req: Request, res: Response) =>{
 
 const remove = async(req: Request, res: Response ) => {
   try {
-    const id = req.body.id;
-    const removedEditorial = await removeEditorial(id);
+    const removedEditorial = await removeEditorial(Number(req.params.id));
     res.status(200).json(removedEditorial);
   } catch (error) {
     res.status(500).json({error: error});

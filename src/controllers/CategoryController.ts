@@ -23,7 +23,7 @@ const getAll = async(req: Request, res: Response) => {
 
 const getById = async(req: Request, res: Response) => {
   try {
-    const category = await getCategoryById(Number(req.body.id));
+    const category = await getCategoryById(Number(req.params.id));
     res.status(200).json(category);
   } catch (error) {
     res.status(500).json({error: error});
@@ -32,8 +32,9 @@ const getById = async(req: Request, res: Response) => {
 
 const update = async(req: Request, res: Response) =>{
   try{
-    const category = req.body as Category;
-    const updatedCategory = await updateCategory(category);
+    const {id} = req.params;
+    const categoryInfo = req.body;
+    const updatedCategory = await updateCategory({id, ...categoryInfo});
     res.status(200).json(updatedCategory);
   }catch(error){
     res.status(500).json({error: error});
@@ -42,8 +43,7 @@ const update = async(req: Request, res: Response) =>{
 
 const remove = async(req: Request, res: Response ) => {
   try {
-    const id = req.body.id;
-    const removedCategory = await removeCategory(id);
+    const removedCategory = await removeCategory(Number(req.params.id));
     res.status(200).json(removedCategory);
   } catch (error) {
     res.status(500).json({error: error});
