@@ -1,7 +1,7 @@
 import { prisma } from "../app";
 import { Editorial, NewEditorial } from "../types";
 
-export const createEditorial = async(newEditorial: NewEditorial) => {
+export const createEditorial = async(newEditorial: NewEditorial): Promise<Editorial> => {
   try{
       const editorial = await prisma.editorial.create({
       data: { ...newEditorial }
@@ -13,7 +13,7 @@ export const createEditorial = async(newEditorial: NewEditorial) => {
   }
 }
 
-export const getAllEditorials = async() => {
+export const getAllEditorials = async(): Promise<Editorial[]> => {
   try {
     const editorials: Editorial[] = await prisma.editorial.findMany();
     return editorials;
@@ -23,7 +23,7 @@ export const getAllEditorials = async() => {
   }
 }
 
-export const getEditorialById = async(id: number) => {
+export const getEditorialById = async(id: number): Promise<Editorial> => {
   try {
     const editorial = prisma.editorial.findUnique({where: {id: id}, include:{Book:true}});
     return editorial;
@@ -33,7 +33,7 @@ export const getEditorialById = async(id: number) => {
   }
 }
 
-export const updateEditorial = async(editorial: Editorial)=>{
+export const updateEditorial = async(editorial: Editorial): Promise<Editorial> =>{
   try{
     const {id, name, website} = editorial;
     const updatedEditorial = await prisma.editorial.update({
@@ -49,7 +49,7 @@ export const updateEditorial = async(editorial: Editorial)=>{
   }
 }
 
-export const removeEditorial = async(id: number) => {
+export const removeEditorial = async(id: number): Promise<Editorial> => {
   try {
     const removedEditorial = await prisma.editorial.delete({
       where: {

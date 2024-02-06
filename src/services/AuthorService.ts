@@ -1,7 +1,7 @@
 import { prisma } from "../app";
 import {Author, NewAuthor} from "../types";
 
-export const createAuthor = async(newAuthor: NewAuthor) => {
+export const createAuthor = async(newAuthor: NewAuthor): Promise<Author> => {
   try{
       const author = await prisma.author.create({
       data: {...newAuthor}
@@ -13,7 +13,7 @@ export const createAuthor = async(newAuthor: NewAuthor) => {
   }
 }
 
-export const getAllAuthors = async() => {
+export const getAllAuthors = async(): Promise<Author[]> => {
   try {
     const authors: Author[] = await prisma.author.findMany();
     return authors;
@@ -23,7 +23,7 @@ export const getAllAuthors = async() => {
   }
 }
 
-export const getAuthorById = async(id: number) => {
+export const getAuthorById = async(id: number): Promise<Author> => {
   try {
     const author = prisma.author.findUnique({where: {id: id}, include:{Book:true}});
     return author;
@@ -33,7 +33,7 @@ export const getAuthorById = async(id: number) => {
   }
 }
 
-export const updateAuthor = async(author: Author)=>{
+export const updateAuthor = async(author: Author): Promise<Author> =>{
   try{
     const {id, fullname, biography, image} = author;
     const updatedAuthor = await prisma.author.update({
@@ -53,7 +53,7 @@ export const updateAuthor = async(author: Author)=>{
   }
 }
 
-export const removeAuthor = async(id: number) => {
+export const removeAuthor = async(id: number): Promise<Author> => {
   try {
     const removedAuthor = await prisma.author.delete({
       where: {

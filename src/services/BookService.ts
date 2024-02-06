@@ -2,7 +2,7 @@ import { prisma } from "../app";
 import { Book, NewBook } from "../types";
 
 
-export const createBook = async(newBook : NewBook) => {
+export const createBook = async(newBook : NewBook):Promise<Book> => {
   try{
       const book = await prisma.book.create({
       data: { ...newBook }
@@ -14,7 +14,7 @@ export const createBook = async(newBook : NewBook) => {
   }
 }
 
-export const getAllBooks = async() => {
+export const getAllBooks = async(): Promise<Book[]> => {
   try {
     const books: Book[] = await prisma.book.findMany();
     return books;
@@ -24,7 +24,7 @@ export const getAllBooks = async() => {
   }
 }
 
-export const getBookById = async(id: number) => {
+export const getBookById = async(id: number): Promise<Book> => {
   try {
     const book = prisma.book.findUnique({where: {id: id}, include:{author:true, category:true, editorial:true}});
     return book;
@@ -34,7 +34,7 @@ export const getBookById = async(id: number) => {
   }
 }
 
-export const updateBook = async(book: Book)=>{
+export const updateBook = async(book: Book): Promise<Book> =>{
   try{
     const {id, title, authorId, editorialId, publicationDate,categoryId, isBestSeller, image} = book;
     const updatedBook = await prisma.book.update({
@@ -58,7 +58,7 @@ export const updateBook = async(book: Book)=>{
   }
 }
 
-export const removeBook = async(id:number) => {
+export const removeBook = async(id:number): Promise<Book> => {
   try {
     const removedBook = await prisma.book.delete({where:{id: id}});
     return removedBook;
@@ -84,7 +84,7 @@ const updateQuantity = async (id: number, quantity: number): Promise<Book> => {
   }  
 }
 
-export const buyBook = async (id:number, quantityToBuy: number) => {
+export const buyBook = async (id:number, quantityToBuy: number): Promise<Book> => {
   const book = await getBookById(id);
   if(book.quantity > quantityToBuy){
     const newQuantity = book.quantity - quantityToBuy;
@@ -93,7 +93,7 @@ export const buyBook = async (id:number, quantityToBuy: number) => {
   throw new Error("The number in stock is not enough to buy this book.");
 }
 
-export const updateStock = async (id:number, quantity: number) => {
+export const updateStock = async (id:number, quantity: number): Promise<Book> => {
   if(quantity > 0){
     const book = await getBookById(id);
     const newQuantity = book.quantity + quantity;

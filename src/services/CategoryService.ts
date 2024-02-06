@@ -1,7 +1,7 @@
 import { prisma } from "../app";
 import { Category, NewCategory } from "../types";
 
-export const createCategory = async(newCategory: NewCategory) => {
+export const createCategory = async(newCategory: NewCategory): Promise<Category> => {
   try{
       const category = await prisma.category.create({
       data: { ...newCategory }
@@ -13,7 +13,7 @@ export const createCategory = async(newCategory: NewCategory) => {
   }
 }
 
-export const getAllCategories = async() => {
+export const getAllCategories = async(): Promise<Category[]>  => {
   try {
     const categorires: Category[] = await prisma.category.findMany();
     return categorires;
@@ -23,7 +23,7 @@ export const getAllCategories = async() => {
   }
 }
 
-export const getCategoryById = async(id: number) => {
+export const getCategoryById = async(id: number): Promise<Category> => {
   try {
     const category = prisma.category.findUnique({where: {id: id}, include:{Book:true}});
     return category;
@@ -33,7 +33,7 @@ export const getCategoryById = async(id: number) => {
   }
 }
 
-export const updateCategory = async(cateogry: Category)=>{
+export const updateCategory = async(cateogry: Category): Promise<Category> =>{
   try{
     const {id, name} = cateogry;
     const updatedCategory = await prisma.category.update({
@@ -49,7 +49,7 @@ export const updateCategory = async(cateogry: Category)=>{
   }
 }
 
-export const removeCategory = async(id: number) => {
+export const removeCategory = async(id: number): Promise<Category>  => {
   try {
     const removedCategory = await prisma.category.delete({
       where: {
