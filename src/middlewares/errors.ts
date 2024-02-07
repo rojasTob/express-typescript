@@ -1,0 +1,9 @@
+import { Request, Response, NextFunction } from "express";
+import { HttpException } from "../exceptions/httpException";
+
+export const errorMiddleware = (error: HttpException, req: Request, res: Response, next: NextFunction)=> {
+  res.status(error.statusCode).json({
+    message: error.message,
+    errors: error.errors
+  })
+}
