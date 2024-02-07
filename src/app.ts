@@ -23,6 +23,10 @@ async function main(){
   app.use("/api/editorial", EditorialRoutes);
   app.use("/api/book", BookRoutes);
 
+  app.all("*", (req: Request, res: Response) => {
+    res.status(404).json({ error: `Route ${req.originalUrl} not found.` });
+  });
+
   app.listen(PORT,()=>{
     console.log(`Server is listening at ${PORT} port.`)
   });
