@@ -9,7 +9,5 @@ This app is about a Book Store (still under construction).
 1. npm install
 2. npx prisma migrate dev
 
-## To run the app
-1. npx tsc
-2. node dist/app.js
-3. Visit http://localhost:3000
+## To compile and run the app
+1. npm start
