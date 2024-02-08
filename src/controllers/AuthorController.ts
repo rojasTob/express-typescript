@@ -1,53 +1,63 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { createAuthor, updateAuthor, getAllAuthors, removeAuthor, getAuthorById} from "../services/AuthorService";
 import { Author, NewAuthor } from "../types";
+import { BadRequestException } from "../exceptions/BadRequestException";
+import { NotFoundException } from "../exceptions/NotFoundException";
 
 
-const create = async(req: Request, res: Response) => {
+const create = async(req: Request, res: Response, next: NextFunction) => {
   try{
     const newAuthor = req.body as NewAuthor;
     const author = await createAuthor(newAuthor);
     res.status(200).json(author);
   }catch(error){
-    res.status(500).json({error: error});
+    next(new BadRequestException(error.name, ['fullname is required and must be a string']));
   }
 }
 
-const getAll = async(req: Request, res: Response) => {
+const getAll = async(req: Request, res: Response, next: NextFunction) => {
   try {
     const authors: Author[] = await getAllAuthors();
     res.status(200).json(authors);
   } catch (error) {
-    res.status(500).json({error: error});
+    next(new BadRequestException(error.name, []));
   }
 }
 
-const getById = async(req: Request, res: Response) => {
+const getById = async(req: Request, res: Response, next: NextFunction) => {
   try {
     const author: Author = await getAuthorById(Number(req.params.id));
-    res.status(200).json(author);
+    if(!author){
+      next(new NotFoundException("Author not found.", ["id not found in authors"]))
+    }else{
+      res.status(200).json(author);
+    }
   } catch (error) {
-    res.status(500).json({error: error});
+    next(new BadRequestException(error.name, []));
   }
 }
 
-const update = async(req: Request, res: Response) =>{
+const update = async(req: Request, res: Response, next: NextFunction) =>{
   try{
     const {id} = req.params;
     const authorInfo = req.body;
     const updatedAuthor = await updateAuthor({id, ...authorInfo});
     res.status(200).json(updatedAuthor);
   }catch(error){
-    res.status(500).json({error: error});
+    next(new BadRequestException(error.name, ['fullname is required and must be a string']));
   }
 }
 
-const remove = async(req: Request, res: Response ) => {
+const remove = async(req: Request, res: Response, next: NextFunction ) => {
   try {
     const removedAuthor = await removeAuthor(Number(req.params.id));
-    res.status(200).json(removedAuthor);
+    if(!removedAuthor){
+      next(new NotFoundException("Author not found.", ["id not found in authors"]))
+    }else{
+      res.status(200).json(removedAuthor);
+    }
   } catch (error) {
-    res.status(500).json({error: error});
+    next(new BadRequestException(error.name, []));
   }
 }
 

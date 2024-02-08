@@ -1,9 +1,10 @@
-import express, {Request, Response} from 'express';
+import express, {NextFunction, Request, Response} from 'express';
 import { PrismaClient } from '@prisma/client';
 import AuthorRoutes from './routes/AuthorRoutes';
 import CategoryRoutes from './routes/CategoryRoutes';
 import EditorialRoutes from './routes/EditorialRoutes';
 import BookRoutes from './routes/BookRoutes';
+import { errorMiddleware } from './middlewares/errors';
 
 export const prisma = new PrismaClient();
 
@@ -26,6 +27,8 @@ async function main(){
   app.all("*", (req: Request, res: Response) => {
     res.status(404).json({ error: `Route ${req.originalUrl} not found.` });
   });
+
+  app.use(errorMiddleware);
 
   app.listen(PORT,()=>{
     console.log(`Server is listening at ${PORT} port.`)
