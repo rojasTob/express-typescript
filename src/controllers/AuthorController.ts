@@ -51,13 +51,9 @@ const update = async(req: Request, res: Response, next: NextFunction) =>{
 const remove = async(req: Request, res: Response, next: NextFunction ) => {
   try {
     const removedAuthor = await removeAuthor(Number(req.params.id));
-    if(!removedAuthor){
-      next(new NotFoundException("Author not found.", ["id not found in authors"]))
-    }else{
-      res.status(200).json(removedAuthor);
-    }
+    res.status(200).json(removedAuthor);
   } catch (error) {
-    next(new BadRequestException(error.name, []));
+    next(new NotFoundException(error.name, ["id to delete not found"]));
   }
 }
 

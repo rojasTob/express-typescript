@@ -50,13 +50,9 @@ const update = async(req: Request, res: Response, next: NextFunction) =>{
 const remove = async(req: Request, res: Response, next: NextFunction ) => {
   try {
     const removedCategory = await removeCategory(Number(req.params.id));
-    if(!removeCategory){
-      next(new NotFoundException("Category not found.", ["id not found in categories"]))
-    }else{
-      res.status(200).json(removedCategory);
-    }
+    res.status(200).json(removedCategory);
   } catch (error) {
-    next(new BadRequestException(error.name, []));
+    next(new NotFoundException(error.name, ["id to delete not found"]));
   }
 }
 
