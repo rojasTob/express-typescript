@@ -9,7 +9,7 @@ const create = async(req: Request, res: Response, next: NextFunction) => {
   try{
     const newAuthor = req.body as NewAuthor;
     const author = await createAuthor(newAuthor);
-    res.status(200).json(author);
+    res.status(201).json(author);
   }catch(error){
     next(new BadRequestException(error.name, ['fullname is required and must be a string']));
   }
