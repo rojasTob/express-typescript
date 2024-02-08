@@ -86,6 +86,10 @@ const updateQuantity = async (id: number, quantity: number): Promise<Book> => {
 
 export const buyBook = async (id:number, quantityToBuy: number): Promise<Book> => {
   const book = await getBookById(id);
+
+  if(!book){
+    throw new Error("The book not exists.");
+  }
   if(book.quantity > quantityToBuy){
     const newQuantity = book.quantity - quantityToBuy;
     return await updateQuantity(id, newQuantity);
@@ -96,6 +100,10 @@ export const buyBook = async (id:number, quantityToBuy: number): Promise<Book> =
 export const updateStock = async (id:number, quantity: number): Promise<Book> => {
   if(quantity > 0){
     const book = await getBookById(id);
+
+    if(!book){
+      throw new Error("The book not exists.");
+    }
     const newQuantity = book.quantity + quantity;
     return await updateQuantity(id, newQuantity);
   }
