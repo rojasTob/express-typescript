@@ -5,6 +5,7 @@ import CategoryRoutes from './routes/CategoryRoutes';
 import EditorialRoutes from './routes/EditorialRoutes';
 import BookRoutes from './routes/BookRoutes';
 import { errorMiddleware } from './middlewares/errors';
+import { NotFoundException } from './exceptions/NotFoundException';
 
 export const prisma = new PrismaClient();
 
@@ -24,8 +25,8 @@ async function main(){
   app.use("/api/editorial", EditorialRoutes);
   app.use("/api/book", BookRoutes);
 
-  app.all("*", (req: Request, res: Response) => {
-    res.status(404).json({ error: `Route ${req.originalUrl} not found.` });
+  app.all("*", (req: Request, res: Response, next: NextFunction) => {
+    next(new NotFoundException("Route not registered", [` ${req.originalUrl} not found`]));
   });
 
   app.use(errorMiddleware);
