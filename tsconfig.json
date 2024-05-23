@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es6",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist"
+    "module": "commonjs", //Specify module code generation
+    "esModuleInterop": true, //To import CommonJS modules in compliance with es6 modules spec
+    "target": "es6", //The target setting changes which JS features are downleveled or left intact
+    "moduleResolution": "node", //Specify the module resolution strategy
+    "sourceMap": true, //translating the compiled files back to your human-readable code
+    "outDir": "dist" //File location for the compiled files
   },
-  "lib": ["es2015"]
+  "lib": ["es2015"] //specifies a set of bundled library declaration files that describe the target runtime environment
 }
