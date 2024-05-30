@@ -1,7 +1,7 @@
 # Node + Typescript + Express + React
 
-Backend: Typescript, Nodejs, Express and Prisma.
-Frontend: Typescript, React.
+- Backend: Typescript, Nodejs, Express and Prisma.
+- Frontend: Typescript, React.
 
 ## About
 This app is about a Book Store (still under construction).
