@@ -1,11 +1,11 @@
 import {Box, Heading} from "@chakra-ui/react";
 
-const Authors = () => {
+const Books = () => {
   return (
     <Box  pl={10} pr={10}>
-      <Heading>Authors page</Heading>
+      <Heading>Books page</Heading>
     </Box>
   );
 };
 
-export default Authors;
+export default Books;
