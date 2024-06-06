@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Authors from "./pages/Authors";
 import Categories from "./pages/Categories";
 import Books from "./pages/Books";
+import "./App.css";
 
 const App = () => {
   return(
