@@ -7,5 +7,6 @@
     "sourceMap": true, //translating the compiled files back to your human-readable code
     "outDir": "dist" //File location for the compiled files
   },
-  "lib": ["es2015"] //specifies a set of bundled library declaration files that describe the target runtime environment
+  "lib": ["es2015"], //specifies a set of bundled library declaration files that describe the target runtime environment
+  "exclude": ["client"]
 }
