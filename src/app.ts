@@ -10,7 +10,7 @@ import { NotFoundException } from './exceptions/NotFoundException';
 export const prisma = new PrismaClient();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 
 async function main(){
