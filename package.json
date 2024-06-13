@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"npx tsc && node dist/app.js",
+    "start": "npx tsc && node dist/app.js",
     "test": "jest --coverage",
     "lint": "npx eslint --init"
   },
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.9.1",
+    "cors": "^2.8.5",
     "express": "^4.18.2"
   }
 }

@@ -6,14 +6,20 @@ import EditorialRoutes from './routes/EditorialRoutes';
 import BookRoutes from './routes/BookRoutes';
 import { errorMiddleware } from './middlewares/errors';
 import { NotFoundException } from './exceptions/NotFoundException';
+import cors from "cors";
 
 export const prisma = new PrismaClient();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-
 async function main(){
+  app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type','Authorization']
+  }));
+
   app.use(express.json());
 
   app.get('/', (req: Request, res: Response) => {
