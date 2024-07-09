@@ -17,7 +17,8 @@ export const saveAuthor = async (authorData: AuthorData) => {
     const result = await response.json();
     return result;
   }catch(error){
-    console.error('Author fecthing error: ', error);
+    console.error('Author.save error: ', error);
+    throw new Error('Error when saving author');
   }
 }
 
@@ -35,7 +36,26 @@ export const getAuthors = async () => {
     const result = await response.json();
     return result;
   }catch(error){
-    console.error('Author fecthing error: ', error);
+    console.error('Author.getAll error: ', error);
+    throw new Error('Error when getting authors');
   }
 }
 
+export const removeAuthor = async (idAuthor: number) => {
+  try{
+    const response = await fetch(API_URL + `/delete/${idAuthor}`, {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
+    });
+
+    if(!response.ok){
+      throw new Error('Network response was not ok');
+    }
+
+    const result = await response.json();
+    return result;
+  }catch(error){
+    console.error('Author.remove error: ', error);
+    throw new Error('Error when removing authors');
+  }
+}

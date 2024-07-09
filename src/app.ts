@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3001;
 async function main(){
   app.use(cors({
     origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type','Authorization']
   }));
 

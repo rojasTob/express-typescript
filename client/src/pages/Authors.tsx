@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Flex, Box, Heading, Input, Button, useToast, TableContainer, Table, Thead, Tbody, Th, Tr, Td} from "@chakra-ui/react";
-import {saveAuthor, getAuthors} from "../services/authors";
+import {saveAuthor, getAuthors, removeAuthor} from "../services/authors";
 import { AuthorData } from "../types";
-import { getAllByTestId } from "@testing-library/react";
 
 const Authors = () => {
   const [authorData, setAuthorData] = useState({fullname: '', biography: '', image: ''});
@@ -18,6 +17,28 @@ const Authors = () => {
       toast({
         title: 'Authors list error',
         description: 'Unable to get the authors list',
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      });
+    }
+  }
+
+  const remove = async(idAuthor: number) => {
+    try{
+      const response = await removeAuthor(idAuthor);
+      toast({
+        title: `Author ${response.fullname} was removed.`,
+        description: 'Author removed',
+        status: 'success',
+        duration: 5000,
+        isClosable: true
+      });
+      getAuthorsList();
+    }catch(error){
+      toast({
+        title: 'Author not removed',
+        description: 'Unable to remove',
         status: 'error',
         duration: 5000,
         isClosable: true
@@ -51,6 +72,7 @@ const Authors = () => {
       });
 
       setAuthorData({fullname: '', biography: '', image: ''});
+      getAuthorsList();
     }catch(error){
       console.error('Author form not submitted');
       toast({
@@ -85,10 +107,13 @@ const Authors = () => {
             </Thead>
             <Tbody>
               {
-                authors.map( author => (
-                  <Tr>
-                    <Td>{author.fullname}</Td>
-                    <Td>Edit | Remove</Td>
+                authors.map( (author, index) => (
+                  <Tr key={index}>
+                   <Td>{author.fullname}</Td>
+                    <Td>
+                      <Button type="button" size='xs'>Edit</Button>
+                      <Button type="button" size='xs' colorScheme='red' onClick={() => remove(Number(author.id))}>Remove {author.id}</Button>
+                    </Td>
                   </Tr>
                 ))
               }
